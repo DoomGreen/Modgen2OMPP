@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ScenarioView>
+	<General Language="EN" LongNames="0" SortedGroups="0" Parsed="1" MaximizeChild="0"></General>
+	<TreeView GroupView="0" Type="-1">PARAMETER_FILES</TreeView>
+	<TreeExpansions>
+		<TreeExpansion>TABLES</TreeExpansion>
+		<TreeExpansion>PARAMETER_FILES|PersonCore</TreeExpansion>
+		<TreeExpansion>PARAMETER_FILES</TreeExpansion>
+	</TreeExpansions>
+	<ChildWindows>
+		<ChildWindow Type="parameter" ActivePropertyPage="0" DisplayOrder0="0" DisplayOrder1="1" Dim0="0" Dim1="0" LeftPaneWidth="-1" TopPaneHeight="-1" FirstVisibleTop="0" FirstVisibleBottom="0" FirstVisibleLeft="0" FirstVisibleRight="0" CurrentPane="2" showCmd="1" MinPositionX="-1" MinPositionY="-1" MaxPositionX="-1" MaxPositionY="-1" NormalPositionLeft="0" NormalPositionTop="0" NormalPositionRight="1382" NormalPositionBottom="731" SplitterPosition="67">DistrAmerindien</ChildWindow>
+		<ChildWindow Type="parameter" ActivePropertyPage="0" DisplayOrder0="0" DisplayOrder1="1" Dim0="0" Dim1="0" LeftPaneWidth="-1" TopPaneHeight="-1" FirstVisibleTop="0" FirstVisibleBottom="0" FirstVisibleLeft="0" FirstVisibleRight="0" CurrentPane="2" showCmd="1" MinPositionX="-1" MinPositionY="-1" MaxPositionX="-1" MaxPositionY="-1" NormalPositionLeft="208" NormalPositionTop="208" NormalPositionRight="1590" NormalPositionBottom="939" SplitterPosition="67">IndigenousProportion</ChildWindow>
+		<ChildWindow Type="parameter" ActivePropertyPage="0" DisplayOrder0="0" DisplayOrder1="1" DisplayOrder2="2" Dim0="0" Dim1="0" Dim2="0" LeftPaneWidth="-1" TopPaneHeight="-1" FirstVisibleTop="0" FirstVisibleBottom="0" FirstVisibleLeft="0" FirstVisibleRight="0" CurrentPane="2" showCmd="1" MinPositionX="-1" MinPositionY="-1" MaxPositionX="-1" MaxPositionY="-1" NormalPositionLeft="182" NormalPositionTop="182" NormalPositionRight="1564" NormalPositionBottom="913" SplitterPosition="67">RegionAgeSexDistn</ChildWindow>
+		<ChildWindow Type="parameter" ActivePropertyPage="1" DisplayOrder0="1" DisplayOrder1="0" Dim0="0" Dim1="0" LeftPaneWidth="-1" TopPaneHeight="-1" FirstVisibleTop="0" FirstVisibleBottom="0" FirstVisibleLeft="0" FirstVisibleRight="0" CurrentPane="2" showCmd="1" MinPositionX="-1" MinPositionY="-1" MaxPositionX="-1" MaxPositionY="-1" NormalPositionLeft="337" NormalPositionTop="155" NormalPositionRight="1719" NormalPositionBottom="886" SplitterPosition="67">StartPopDistn</ChildWindow>
+		<ChildWindow Type="parameter" ActivePropertyPage="0" DisplayOrder0="0" DisplayOrder1="1" Dim0="12" Dim1="0" LeftPaneWidth="-1" TopPaneHeight="-1" FirstVisibleTop="0" FirstVisibleBottom="0" FirstVisibleLeft="0" FirstVisibleRight="0" CurrentPane="2" showCmd="1" MinPositionX="-1" MinPositionY="-1" MaxPositionX="-1" MaxPositionY="-1" NormalPositionLeft="19" NormalPositionTop="8" NormalPositionRight="1401" NormalPositionBottom="739" SplitterPosition="67">DistrMinVis</ChildWindow>
+	</ChildWindows>
+	<ParameterSymbols>
+		<ParameterSymbol DimTotals="0:0:">NativeBorn</ParameterSymbol>
+		<ParameterSymbol DimTotals="0:0:">RecentArrival</ParameterSymbol>
+		<ParameterSymbol DimTotals="0:0:">IndigenousProportion</ParameterSymbol>
+	</ParameterSymbols>
+	<ExportGeneral NoSE="1" NoCV="1" TableType="EXCEL_ONESHEET" Sparse="0" Lines="66"></ExportGeneral>
+	<ExportSubSamples>
+		<ExportSubSample Value="0">0</ExportSubSample>
+		<ExportSubSample Value="0">1</ExportSubSample>
+		<ExportSubSample Value="0">2</ExportSubSample>
+		<ExportSubSample Value="0">3</ExportSubSample>
+		<ExportSubSample Value="0">4</ExportSubSample>
+		<ExportSubSample Value="0">5</ExportSubSample>
+		<ExportSubSample Value="0">6</ExportSubSample>
+		<ExportSubSample Value="0">7</ExportSubSample>
+		<ExportSubSample Value="0">8</ExportSubSample>
+		<ExportSubSample Value="0">9</ExportSubSample>
+		<ExportSubSample Value="0">10</ExportSubSample>
+		<ExportSubSample Value="0">11</ExportSubSample>
+		<ExportSubSample Value="0">12</ExportSubSample>
+		<ExportSubSample Value="0">13</ExportSubSample>
+		<ExportSubSample Value="0">14</ExportSubSample>
+		<ExportSubSample Value="0">15</ExportSubSample>
+	</ExportSubSamples>
+	<ExportTables>
+		<ExportTable Present="1">ImmCitoyGen</ExportTable>
+		<ExportTable Present="1">GroupEthnoAmerindien</ExportTable>
+		<ExportTable Present="1">InitialPopCounts</ExportTable>
+	</ExportTables>
+</ScenarioView>

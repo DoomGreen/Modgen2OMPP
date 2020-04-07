@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scenario ScenarioVersion="1.8">
+	<General Cases="10000" PopulationScaling="0" Population="50000" Threads="1" Subsamples="16" PartialReports="0" StartingSeed="16807" ComputationPriority="THREAD_PRIORITY_BELOW_NORMAL" CancelPartialResults="PARTIAL_YES" BackgroundMode="0" SilentMode="0" DistributedExecution="0" DistributedSamples="1" AccessTracking="0" MaxTrackedCases="50" TextTracking="0" CopyParameters="0" MemoryReports="0"></General>
+	<Inputs>
+		<Input>.\base(PersonCore).dat=C:\Users\domin\Documents\Travail_STC\Covid19-Travail\OMPP\models\OzProjGen_DemosimBasePop\parameters\base(PersonCore).dat</Input>
+	</Inputs>
+	<ExcludedTables>
+		<ExcludedTable>InitialNativeBorn</ExcludedTable>
+		<ExcludedTable>InitialIndigenous</ExcludedTable>
+		<ExcludedTable>InitialRecentArrival</ExcludedTable>
+		<ExcludedTable>InitialYearsSinceArrival</ExcludedTable>
+		<ExcludedTable>InitialRegion</ExcludedTable>
+	</ExcludedTables>
+</Scenario>

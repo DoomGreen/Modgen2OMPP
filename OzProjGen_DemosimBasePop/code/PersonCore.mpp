@@ -1,0 +1,444 @@
+//LABEL(PersonCore, EN) Core functionality of the Person actor
+
+/* NOTE(PersonCore, EN)
+	This module contains the basic information which defines the Person case.
+*/
+
+parameters 
+{
+  //EN Starting population distribution
+  cumrate[2] StartPopDistn[SEX][RANGE_AGE];
+
+  //EN Native-born proportion (last 5 years)
+  double NativeBorn[SEX][AGE_CLASS2];
+
+  //EN Recent arrival proportion
+  double RecentArrival[SEX][AGE_CLASS2];
+
+  //EN Immigrant age distribution
+  cumrate[1] ImmigrantAgeDist[SEX][RANGE_AGE];
+
+  //EN Indigenous proportion of native-born
+  double IndigenousProportion[RANGE_AGE_65][ONE_COLUMN];
+
+  //EN Regional distribution by sex and age
+  cumrate[1] RegionAgeSexDistn[SEX][RANGE_AGE_85][REGION];
+
+  cumrate[1] DistrMinVis[PROVINCE][MINVIS];
+  cumrate[1] DistrAmerindien[PROVINCE][AMERINDIEN];
+
+};
+
+actor Person            //EN Individual
+{
+  //EN Value
+  ONE_COLUMN one_column = 0;
+  /*NOTE(ONE_COLUMN, EN)
+    Used to create one-column tables for better display in model interface.
+  */
+
+  // The variables time and age are automatically defined by Modgen.
+	// Model-specific labels and notes are supplied below.
+
+  /*NOTE(Person.time, EN)
+    Time is a continuous quantity in this model.
+
+    A unit of time is a year, i.e. a year lasts exactly 1.0 units of time.
+    The variation in year length due to leap years is ignored in this model.
+
+    Continuous time is offset by half a year in this version of the model.
+    E.g. on midnight June 30, 2011 the value of time is exactly 2011.0.
+  */
+
+	//LABEL(Person.age, EN) Age
+	/*NOTE(Person.age, EN)
+		Age is a continuous quantity in this model.
+		A unit of age is a year.
+	*/
+
+	//EN Alive
+	logical alive = {TRUE};
+	/*NOTE(Person.alive, EN)
+		Set to TRUE when the actor starts, and to FALSE just before the actor finishes.
+		Since the numeric value of TRUE is 1 and FALSE is 0, this variable
+		can also be used to count actors in tables.
+	*/
+
+  
+    /********************************************************/
+    int     age_imm;
+    int     annee_imm;
+    REGION_52     region_52;
+    GROUPE_ETHNOCULTUREL     group_ethno;
+    int     reg_naiss;
+    int     religion;
+    int     langue_maternelle;
+    int     nombre_enfant_int;
+    STATUT_IMMIG2     immigrant;
+    int     etat_mat;
+    int     sexe;
+    int     youngest_child;
+    GENERATION_IMMIGRANT_DETAIL     generation_imm_detail;
+    int     scolarite;
+    int     sur_reserve;
+    int     inunaat;
+    int     impurese;
+    int     region52_mob1;
+    int     reserve_mob1;
+    int     inunaat_mob1;
+    int     scolarite0;
+    double     ddn_fraction;
+    int     type_indien_inscrit;
+    AMERINDIEN     amerindien;
+    int     ascendance_autochtone;
+    int     langue_officielle;
+    int     langue_maison;
+    int     qalipu;
+    int     classe_immigrant;
+    int     asrr;
+    CITOYENNETE     citoyennete;
+    int     identifiant;
+    int     lie_au_ri;
+
+    PROVINCE    province = aggregate(region_52, PROVINCE);
+
+    /********************************************************/
+
+  //EN Age
+  int age_int = self_scheduling_int(age);
+
+  //EN Age
+  RANGE_AGE range_age = COERCE(RANGE_AGE, age_int);
+
+  //EN Age
+  AGE_CLASS2 age_group2 = AGE_CLASS2(
+        (age_int < 5 ) ? 0
+      : ( age_int < 75 ) ? ( 1 + ( age_int - 5 ) / 10 )
+      : 8
+  );
+
+  //EN Age
+  RANGE_AGE_65 range_age_65 = COERCE(RANGE_AGE_65, age_int);
+
+  //EN Age
+  RANGE_AGE_85 range_age_85 = COERCE(RANGE_AGE_85, age_int);
+
+  //EN Sex
+  SEX sex;
+
+  //EN Region
+  REGION region;
+
+  //EN Native-born
+  logical native_born;
+
+  //EN Indigeous
+  logical indigenous;
+
+  //EN Recent arrival (last 5 years)
+  logical recent_arrival;
+
+  //EN Years since arrival
+  RANGE_AGE years_since_arrival;
+
+  //EN Year
+  int integer_time = self_scheduling_int(time);
+
+  /*NOTE(Person.integer_time, EN)
+    The origin of time is mid-year in this model. That means, for example, that integer_time
+    is equal to 2011 from midnight June 30, 2011 through to midnight, June 30, 2012.
+  */
+
+  //EN Year
+  YEAR year = COERCE(YEAR, integer_time + 1);
+
+  //EN Beginning of the simulation
+  logical simulation_begin = { TRUE };
+
+  /*NOTE(Person.year, EN)
+    The real world year number at the end of the current mid-year interval, e.g.
+    year = 2012 means real world time is in the interval [2011.5, 2012.5].
+  */
+
+  //EN Simulation control event
+  event timeSimulationControlEvent, SimulationControlEvent;
+
+  //LABEL(Person.Start, EN) Starts the actor
+  void Start();
+
+  //LABEL(Person.Finish, EN) Finishes the actor
+  void Finish();
+};
+
+// The time function of SimulationControlEvent
+TIME Person::timeSimulationControlEvent()
+{
+  return WAIT(0);
+}
+
+// The implement function of SimulationControlEvent
+void Person::SimulationControlEvent()
+{
+  // Write current values to the microdata output file
+  auto ci = CaseInfo();
+  WriteUnitRecord(ci);
+
+  if ( simulation_begin )
+    simulation_begin = FALSE;
+
+  Finish();
+}
+
+/*NOTE(Person.Start, EN)
+	The Start function initializes actor variables before simulation
+	of the actor commences.
+*/
+void Person::Start()
+{
+    double dPoids = {0.00};
+  // Initialize all attributes (OpenM++).
+  initialize_attributes();
+
+  time = MIN(YEAR) - 1;
+
+  dPoids = 50 * RandUniform(5);
+  SetCaseWeight(dPoids);
+
+  // Draw from the starting distribution by sex and age.
+  int nSex = 0;
+  int nAge = 0;
+  Lookup_StartPopDistn(RandUniform(2), &nSex, &nAge);
+  if ( 0 == nSex ) sex = MALE;
+  else sex = FEMALE;
+  // Add a random fractional part of age
+  ddn_fraction = RandUniform(3);
+  age = nAge + ddn_fraction;
+
+  region_52 = (REGION_52) int(52 * RandUniform(6));
+
+  int nMV = 0;
+  int nIDAbo = 0;
+  type_indien_inscrit = 0;
+  Lookup_DistrMinVis(RandUniform(8), province, &nMV);
+  if (nMV == 11)
+  {
+     Lookup_DistrAmerindien(RandUniform(9), province, &nIDAbo);
+     if (nIDAbo <= 1)
+        type_indien_inscrit = (int) 3 * RandUniform(10);
+  }
+  else
+     nIDAbo = 5;
+
+     int nGE = {0};
+  if (nMV == 10)
+    nGE = 10 + (RandUniform(11) < .5); /* spliter les nia et les mult */
+  else if (nMV < 10)
+    nGE = nMV;
+  else if (nIDAbo == 0)
+    nGE = (type_indien_inscrit == 0) ? 13 : 14;
+  else if (nIDAbo == 5)
+    nGE = 12;   // blancs
+  else if (nIDAbo == 1)
+      nGE = 15;   // metis
+  else if (nIDAbo == 2)
+      nGE = 16;   // inuit
+  else 
+      nGE = 17;   // mult
+
+  group_ethno = (GROUPE_ETHNOCULTUREL) nGE;
+
+  amerindien = (AMERINDIEN) nIDAbo;
+  ascendance_autochtone = 0;
+  qalipu = 0;
+
+  religion = 0;
+
+  langue_maternelle = (int) 4 * RandUniform(12);
+  langue_maison = langue_maternelle;
+  langue_officielle = langue_maternelle;
+  nombre_enfant_int = (int) 4 * RandUniform(13);
+  immigrant = STATUT_IMMIG2 ((province > 9) ? 0 :
+               (province < 4 && RandUniform(14) < .1) ? 2:
+               (province >= 4 && province <= 9 && RandUniform(15) < .3) ? 2 : 0);
+  if (immigrant == 2 && RandUniform(16) < .1)
+    immigrant = SI2_RNP;  //RNP
+
+  etat_mat = (int) 3 * RandUniform(17);
+  youngest_child = (int) 15 * RandUniform(18);
+  if (nombre_enfant_int == 0)
+    youngest_child = 99;
+
+  if (immigrant > 0)
+  {
+    generation_imm_detail = GID_GEN1;
+    age_imm = age_int - 2;
+    if (age_imm < 0)
+        age_imm = age_int;
+    if (age_imm < 15)
+        generation_imm_detail = GID_GEN15;  //1.5
+  }
+  else 
+    generation_imm_detail = GENERATION_IMMIGRANT_DETAIL (3 * RandUniform(19) + 2);
+
+  if (immigrant == 1)
+  {
+      classe_immigrant = 7;
+      citoyennete = C_NON_CAN;
+      reg_naiss = 200;
+      int nDelai = {0};
+      nDelai = (int) (age_int * RandUniform(24));
+      annee_imm = (int)time - nDelai;
+      age_imm = age_int - nDelai;
+  }
+  else if (immigrant == 0)
+  {
+    classe_immigrant = 6;
+    citoyennete = C_CAN_NAISS;
+    reg_naiss = 200;
+    annee_imm = 2098;
+    age_imm = 123;
+  }
+  else if (immigrant == 2)
+  {
+    classe_immigrant = (int) 5 * RandUniform(20);
+    citoyennete = C_NON_CAN;
+    reg_naiss = province;
+    annee_imm = (int) time - 2;
+  }
+
+  scolarite0 = (int) 4 * RandUniform(21);
+  scolarite = scolarite0;
+  sur_reserve = (RandUniform(22) < .05);
+  inunaat = (sur_reserve) ? 0 : (RandUniform(23) < .01);
+  impurese = 0;
+  region52_mob1 = region_52;
+  reserve_mob1 = sur_reserve;
+  inunaat_mob1 = inunaat;
+
+
+  if (age < 15)
+  {
+    etat_mat = 0;
+  }
+
+  asrr = 0;
+  identifiant = 10;
+  lie_au_ri = 0;
+
+  int nRegion = 0;
+  Lookup_RegionAgeSexDistn(RandUniform(7), sex, range_age_85, &nRegion);
+  region = (REGION) nRegion;
+
+  if ( RandUniform(1) < NativeBorn[sex][age_group2] )
+    native_born = TRUE;
+  else
+    native_born = FALSE;
+
+  if ( !native_born && age_int < 5)
+    recent_arrival = TRUE;
+  else if ( !native_born && RandUniform(4) < RecentArrival[sex][age_group2] )
+    recent_arrival = TRUE;
+  else
+    recent_arrival = FALSE;
+
+
+
+  // Have the entity enter the simulation (OpenM++).
+  enter_simulation();
+}
+
+/*NOTE(Person.Finish, EN)
+	The Finish function terminates the simulation of an actor.
+*/
+void Person::Finish()
+{
+    // Have the entity exit the simulation (OpenM++).
+    exit_simulation();
+
+	// After the code in this function is executed,
+	// Modgen removes the actor from tables and from the simulation.
+	// Modgen also recuperates any memory used by the actor.
+};
+
+table Person InitialPopCounts //EN Initial population counts
+[ simulation_begin ]
+{
+  {
+    unit
+  }
+  * range_age+
+  * sex+
+};
+
+table Person GroupEthnoAmerindien
+[simulation_begin]
+{
+    {unit}
+    * group_ethno+
+    * amerindien+
+};
+
+table Person ImmCitoyGen
+[simulation_begin]
+{
+    {unit}
+    * generation_imm_detail+
+    * citoyennete+
+    * immigrant+
+};
+
+table Person InitialIndigenous //EN Initial population by indigenous status
+[ simulation_begin ]
+{
+  {
+    value_in(indigenous) / unit //EN Proportion indigenous decimals=4
+  }
+  * range_age_65+
+  * one_column
+};
+
+table Person InitialNativeBorn //EN Initial population by native-born status
+[ simulation_begin ]
+{
+  {
+    value_in(native_born) / unit //EN Proportion native-born decimals=4
+  }
+  * age_group2+
+  * sex+
+};
+
+table Person InitialRecentArrival //EN Initial population immigrants by recent-arrival status
+[ simulation_begin && ! native_born ]
+{
+  {
+    value_in(recent_arrival) / unit //EN Proportion recent arrival decimals=4
+  }
+  * age_group2+
+  * sex+
+};
+
+table Person InitialYearsSinceArrival //EN Initial pop. - immigrants by years since arrival
+[ simulation_begin && ! native_born ]
+{
+  {
+    unit //EN Count
+  }
+  * age_group2+
+  * years_since_arrival+
+  * sex+
+};
+
+table Person InitialRegion //EN Initial population by region
+[ simulation_begin ]
+{
+  {
+    unit //EN Persons
+  }
+  * region+
+  * sex+
+};
+
+track Person {
+  sex,
+  age_int
+};

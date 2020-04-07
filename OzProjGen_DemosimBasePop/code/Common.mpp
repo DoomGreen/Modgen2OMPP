@@ -1,0 +1,346 @@
+//LABEL(Common, EN) Shared components
+
+/*NOTE(Common, EN)
+  This module declares types used in multiple modules and models
+*/
+
+classification ONE_COLUMN //EN Value
+{
+  Value //EN Value
+};
+/*NOTE(ONE_COLUMN, EN)
+  Dummy classification used to flip display of 1-D tables and parameters
+  from one row to one column.
+*/
+
+classification SEX //EN Sex
+{
+  //EN Male
+  MALE,
+
+  //EN Female
+  FEMALE
+};
+
+range RANGE_AGE //EN Age
+{ 0, 100 };
+
+range RANGE_AGE_65 //EN Age
+{ 0, 65 };
+
+range RANGE_AGE_85 //EN Age
+{ 0, 85 };
+
+range YEAR //EN Year
+{ 2012, 2061 };
+
+classification AGE_CLASS1 //EN Age
+{
+  //EN 0-4
+  AC1_0_4,
+
+  //EN 5-9
+  AC1_5_9,
+
+  //EN 10-14
+  AC1_10_14,
+
+  //EN 15-19
+  AC1_15_19,
+
+  //EN 20-24
+  AC1_20_24,
+
+  //EN 25-29
+  AC1_25_29,
+
+  //EN 30-34
+  AC1_30_34,
+
+  //EN 35-39
+  AC1_35_39,
+
+  //EN 40-44
+  AC1_40_44,
+
+  //EN 45-49
+  AC1_45_49,
+
+  //EN 50-54
+  AC1_50_54,
+
+  //EN 55+
+  AC1_55_PLUS
+};
+
+classification AGE_CLASS2 //EN Age
+{
+  //EN 0-4
+  AC2_0_4,
+
+  //EN 5-14
+  AC2_5_14,
+
+  //EN 15-24
+  AC2_15_24,
+
+  //EN 25-34
+  AC2_25_34,
+
+  //EN 35-44
+  AC2_35_44,
+
+  //EN 45-54
+  AC2_45_54,
+
+  //EN 55-64
+  AC2_55_64,
+
+  //EN 65-74
+  AC2_65_74,
+
+  //EN 75+
+  AC2_75_PLUS
+};
+
+classification PERSON_ORIGIN //EN Origin of Person
+{
+  //EN Initial population
+  PO_INITIAL_POP,
+
+  //EN Birth during simulation
+  PO_BIRTH,
+
+  //EN Immigrant arriving during simulation
+  PO_IMMIGRANT
+};
+
+classification REGION //EN Region
+{
+  //EN New South Wales
+  REG_NSW,
+
+  //EN Victoria
+  REG_VIC,
+
+  //EN Queensland
+  REG_QLD,
+
+  //EN South Australia
+  REG_SA,
+
+  //EN Western Australia
+  REG_WA,
+
+  //EN Tasmania
+  REG_TAS,
+
+  //EN Northern Territory
+  REG_NT,
+
+  //EN Australian Capital Territory
+  REG_ACT
+};
+
+classification REGION_52	//FR GÈographie de 2016 (52 rÈgions)
+{
+    R52_STJOHNS	,	//FR	St-John's
+    R52_TNLAB	,	//FR	Reste de Terre-Neuve-et-Labrador
+    R52_IPE	,	//FR	Ile-du-Prince-Edouard
+    R52_HAL	,	//FR	Halifax
+    R52_NE	,	//FR	Reste de la Nouvelle-ê…cosse
+    R52_MONC	,	//FR	Moncton
+    R52_SAINTJOHN	,	//FR	Saint John
+    R52_NB_FR	,	//FR	Nouveau-Brunswick hors RMR, rÈgions francophones
+    R52_NB	,	//FR	Reste du Nouveau-Brunswick
+    R52_SAGUENAY	,	//FR	Saguenay
+    R52_QUEBEC_RMR	,	//FR	QuÈbec
+    R52_SHERBROOKE	,	//FR	Sherbrooke
+    R52_3RIVIERES	,	//FR	Trois-RiviËres
+    R52_MTL	,	//FR	Œle de MontrÈal
+    R52_MTL_HORSILE	,	//FR	MontrÈal, hors Óle de MontrÈal
+    R52_GATINEAU	,	//FR	Ottawa-Gatineau (partie quÈbÈcoise)
+    R52_QUEBEC	,	//FR	Reste du QuÈbec
+    R52_OTTAWA	,	//FR	Ottawa-Gatineau (partie ontarienne)
+    R52_KINGSTON	,	//FR	Kingston
+    R52_BELLEVILLE	,	//FR	Belleville
+    R52_PETER	,	//FR	Peterborough
+    R52_OSHAWA	,	//FR	Oshawa
+    R52_TORONTO	,	//FR	Toronto
+    R52_HAMILTON	,	//FR	Hamilton
+    R52_STCATH_NIAG	,	//FR	St.Catharines-Niagara
+    R52_KITCHENER	,	//FR	Kitchener-Cambridge-Waterloo
+    R52_BRANTFORD	,	//FR	Brantford
+    R52_GUELPH	,	//FR	Guelph
+    R52_LONDON	,	//FR	London
+    R52_WINDSOR	,	//FR	Windsor
+    R52_BARRIE	,	//FR	Barrie
+    R52_GR_SUDBURY	,	//FR	Grand Sudbury
+    R52_THUNDERB	,	//FR	Thunder Bay
+    R52_ONT_FR	,	//FR	Ontario hors RMR, rÈgions francophones
+    R52_ONT	,	//FR	Reste de l'Ontario
+    R52_WINNIPEG	,	//FR	Winnipeg
+    R52_MANITOBA	,	//FR	Reste du Manitoba
+    R52_REGINA	,	//FR	Regina
+    R52_SASKATOON	,	//FR	Saskatoon
+    R52_SASKATCHEWAN	,	//FR	Reste de la Saskatchewan
+    R52_LETHBRIDGE	,	//FR	Lethbridge
+    R52_CALGARY	,	//FR	Calgary
+    R52_EDMONTON	,	//FR	Edmonton
+    R52_ALBERTA	,	//FR	Reste de l'Alberta
+    R52_KELOWNA	,	//FR	Kelowna
+    R52_VANCOUVER	,	//FR	Vancouver
+    R52_VICTORIA	,	//FR	Victoria
+    R52_ABBOTSFORD	,	//FR	Abbotsford-Mission
+    R52_CB	,	//FR	Reste de la Colombie-Britannique
+    R52_YUKON	,	//FR	Yukon
+    R52_TNO	,	//FR	Territoires du Nord-Ouest
+    R52_NUNAVUT		//FR	Nunavut
+};
+
+classification PROVINCE		//FR Province de rÈsidence (13)							
+{
+    P_TN, 	//FR Terre-Neuve et Labrador							
+    P_IPE, 	//FR Ile-du-Prince-êdouard							
+    P_NE, 	//FR Nouvelle-…êcosse							
+    P_NB, 	//FR Nouveau-Brunswick							
+    P_QC, 	//FR QuÈbec							
+    P_ONT, 	//FR Ontario							
+    P_MAN, 	//FR Manitoba							
+    P_SASK, 	//FR Saskatchewan							
+    P_ALB, 	//FR Alberta							
+    P_CB, 	//FR Colombie-Britannique 							
+    P_YUK, 	//FR Yukon 							
+    P_TNO, 	//FR Territoires du Nord-Ouest							
+    P_NUN	//FR Nunavut							
+};
+
+classification MINVIS
+{
+    M_CHINOIS,
+    M_ASIS,
+    M_NOIR,
+    M_PHILIP,
+    M_LATINO,
+    M_ASISE,
+    M_ARABE,
+    M_ASIO,
+    M_CORE,
+    M_JAPO,
+    M_AUTRES,
+    M_RESTE //FR blancs et autochtones
+};
+
+classification AMERINDIEN //FR AmÈrindien									
+{
+     AM_AMER_NORD, 	//FR Indien d'AmÈrique du nord							
+     AM_METIS, 	//FR MÈtis							
+     AM_INUIT, 	//FR Inuit							
+     AM_MULT, 	//FR Multiples							
+     AM_NIA, 	//FR non inclus ailleurs							
+    AM_NON_AUTOCH	//FR Non autochtone							
+};
+
+
+aggregation PROVINCE, REGION_52
+{
+     P_TN 	,	R52_STJOHNS	,
+     P_TN 	,	R52_TNLAB	,
+     P_IPE 	,	R52_IPE	,
+     P_NE 	,	R52_HAL	,
+     P_NE 	,	R52_NE	,
+     P_NB 	,	R52_MONC	,
+     P_NB 	,	R52_SAINTJOHN	,
+     P_NB 	,	R52_NB_FR	,
+     P_NB 	,	R52_NB	,
+     P_QC 	,	R52_SAGUENAY	,
+     P_QC 	,	R52_QUEBEC_RMR	,
+     P_QC 	,	R52_SHERBROOKE	,
+     P_QC 	,	R52_3RIVIERES	,
+     P_QC 	,	R52_MTL	,
+     P_QC 	,	R52_MTL_HORSILE	,
+     P_QC 	,	R52_GATINEAU	,
+     P_QC 	,	R52_QUEBEC	,
+     P_ONT 	,	R52_OTTAWA	,
+     P_ONT 	,	R52_KINGSTON	,
+     P_ONT 	,	R52_BELLEVILLE	,
+     P_ONT 	,	R52_PETER	,
+     P_ONT 	,	R52_OSHAWA	,
+     P_ONT 	,	R52_TORONTO	,
+     P_ONT 	,	R52_HAMILTON	,
+     P_ONT 	,	R52_STCATH_NIAG	,
+     P_ONT 	,	R52_KITCHENER	,
+     P_ONT 	,	R52_BRANTFORD	,
+     P_ONT 	,	R52_GUELPH	,
+     P_ONT 	,	R52_LONDON	,
+     P_ONT 	,	R52_WINDSOR	,
+     P_ONT 	,	R52_BARRIE	,
+     P_ONT 	,	R52_GR_SUDBURY	,
+     P_ONT 	,	R52_THUNDERB	,
+     P_ONT 	,	R52_ONT_FR	,
+     P_ONT 	,	R52_ONT	,
+     P_MAN 	,	R52_WINNIPEG	,
+     P_MAN 	,	R52_MANITOBA	,
+     P_SASK 	,	R52_REGINA	,
+     P_SASK 	,	R52_SASKATOON	,
+     P_SASK 	,	R52_SASKATCHEWAN	,
+     P_ALB 	,	R52_LETHBRIDGE	,
+     P_ALB 	,	R52_CALGARY	,
+     P_ALB 	,	R52_EDMONTON	,
+     P_ALB 	,	R52_ALBERTA	,
+     P_CB 	,	R52_KELOWNA	,
+     P_CB 	,	R52_VANCOUVER	,
+     P_CB 	,	R52_VICTORIA	,
+     P_CB 	,	R52_ABBOTSFORD	,
+     P_CB 	,	R52_CB	,
+     P_YUK 	,	R52_YUKON	,
+     P_TNO 	,	R52_TNO	,
+     P_NUN	,	R52_NUNAVUT	
+};
+
+classification  GROUPE_ETHNOCULTUREL     //FR Groupe de minoritÈs visibles avec autochtones dÈtaillÈs (18)									
+{
+     GE_CHIN, 	//FR Chinois  							
+     GE_SUDA, 	//FR Sud-Asiatique							
+     GE_NOIR, 	//FR Noir							
+     GE_PHIL, 	//FR Philippin							
+     GE_LATI, 	//FR Latino-AmÈricain							
+     GE_ASSE, 	//FR Asiatique du Sud-Est							
+     GE_ARAB, 	//FR Arabe							
+     GE_ASOC, 	//FR Asiatique occidental							
+     GE_CORE, 	//FR CorÈen							
+     GE_JAPO, 	//FR Japonais							
+     GE_NIA, 		//FR MinoritÈ visible NIA						
+     GE_MULT, 		//FR MinoritÈ visible multiple						
+     GE_BLAN, 		//FR Blanc						
+     GE_IND_INSCRITAN, 	//FR Indien inscrit d'AmÈrique du Nord							
+     GE_IND_NONINSCRIT, 	//FR Indien non-inscrit d'AmÈrique du Nord							
+     GE_IND_METIS, 	//FR Metis							
+     GE_IND_INUIT, 	//FR Inuit							
+    GE_IND_MULT		//FR IdentitÈs autochtones multiples						
+};
+
+classification  STATUT_IMMIG2	//FR Statut d'immigrant								
+{
+     SI2_CAN, 	//FR Non immigrant							
+     SI2_RNP, 	//FR RÈsident non-permanent							
+    SI2_IMM		//FR Immigrant						
+};
+
+classification CITOYENNETE	//FR Statut de citoyennetÈ canadienne
+{
+    C_CAN_NAISS,		//FR Citoyen canadien par naissance sans autre(s) citoyennetÈ(s)
+    C_CAN_NAISS_AUT,	//FR Citoyen canadien par naissance avec au moins une autre citoyennetÈ
+    C_CAN_NAT,			//FR Citoyen canadien par naturalisation sans autre(s) citoyennetÈ(s)
+    C_CAN_NAT_AUT,		//FR Citoyen canadien par naturalisation avec au moins une autre citoyennetÈ
+    C_NON_CAN			//FR Pas un citoyen canadien
+};
+
+classification  GENERATION_IMMIGRANT_DETAIL	//FR Statut de gÈnÈration d'immigrant dÈtaillÈ
+{
+    GID_GEN1, 	//FR PremiËre gÈnÈration (immigrant arrivÈ ‡ 15 ans ou plus)
+    GID_GEN15, 	//FR PremiËre gÈnÈration + (immigrant arrivÈ ‡ moins de 15 ans)
+    GID_GEN2, 	//FR DeuxiËme gÈnÈration (deux parents nÈs ‡ l'Ètranger)
+    GID_GEN25, 	//FR DeuxiËme gÈnÈration + (un seul parent nÈ ‡ l'Ètranger)
+    GID_GEN3		//FR TroisiËme gÈnÈration ou plus						
+};

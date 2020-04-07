@@ -1,0 +1,207 @@
+//LABEL(MicroData, EN) Common functionality associated with microdata
+
+/* NOTE(MicroData, EN)
+	This module is identical in OzProjGen and OzProj.
+    This helps ensure that field order and contents
+    of the microdata file are identical in the two models.
+*/
+
+classification PERSON_MICRODATA_COLUMNS	 //EN fields in the microdata file 
+{
+  PMC_SEX,
+  PMC_AGE,
+  PMC_REGION,
+  PMC_NATIVE_BORN,
+  PMC_RECENT_ARRIVAL,
+  PMC_YEARS_SINCE_ARRIVAL,
+  PMC_INDIGENOUS
+};
+
+classification DEMOSIM_LAYOUT
+{
+    DL_POIDS,           //FR Poids (x 1E5)
+    DL_ANNEE_IMM,       //FR Année d'immigration
+    DL_AGE,             //FR Âge
+    DL_AGE_IMM,         //FR Âge à l'immigration
+    DL_REGION52,        //FR Région (52)
+    DL_GROUPETHNO,      //FR Groupe ethno-culturel
+    DL_LIEU_NAISS,      //FR Lieu de naissance (province ou pays)
+    DL_RELIGION,        //FR Religion
+    DL_LANGUE_MAT,      //FR Langue maternelle
+    DL_NB_ENF,          //FR Nombre d'enfant dans le ménage
+    DL_STATUT_IMM,      //FR Statut d'immigrant
+    DL_ETAT_MAT,        //FR État matrimonial
+    DL_SEXE,            //FR Sexe
+    DL_AGE_EPJ,         //FR Age de l'enfant le plus jeune
+    DL_STATUT_GEN,      //FR Statut de génération
+    DL_SCOLARITE,       //FR Scolarité
+    DL_RESERVE,         //FR Sur-Hors réserve
+    DL_INUNAAT,         //FR Sur-Hors terre inuuit
+    DL_IMPURESE,        //FR Réserve imputée (part. dénombrée)
+    DL_REGION52_MOB1,   //FR Région de résidence 1 an auparavant
+    DL_RESERVE_MOB1,    //FR Sur-Hors réserve 1 an auparavant
+    DL_INUNAAT_MOB1,    //FR Sur-Hors terre inuit 1 an auparavant
+    DL_SCOLARITE0,      //FR Scolarité (selon le modèle de M.Speilauer)
+    DL_DDN_FRACTION,    //FR Date de naissance (fraction de l'année)
+    DL_TYPE_INDIEN,     //FR Type d'indien inscrit
+    DL_AMERINDIEN,      //FR Identité autochtone
+    DL_ASCENDANCE,      //FR Ascendance autochtone
+    DL_OLN,             //FR Connaissance des langues officielles
+    DL_LANGUE_MAIS,     //FR Langue parlée le plus souvent à la maison
+    DL_QALIPU,          //FR Drapeau Qalipu
+    DL_CATEG_IMM,       //FR Catégorie d'immigrant
+    DL_ASRR,            //FR Identité autochtone (incluant les multiples)
+    DL_CITOYEN,         //FR Citoyenneté canadienne
+    DL_IDENTIFIANT,     //FR Identifiant pour lier au recensement
+    DL_LINK_RI          //FR Drapeau de lien au registre des indiens
+};
+
+actor Person //EN Individual
+{
+  //EN Write unit record
+  void WriteUnitRecord(case_info *ci);
+};
+
+void Person::WriteUnitRecord(case_info *ci)
+{
+  // Push the fields into the output record.
+  for (int nJ = 0; nJ < SIZE(DEMOSIM_LAYOUT); nJ++ ) {
+  // Fields:
+  switch (nJ) {
+          case	DL_POIDS:
+              ci->out_csv << (double) actor_weight ;
+                  break;
+          case	DL_ANNEE_IMM:
+              ci->out_csv << (int) annee_imm;
+                  break;
+          case	DL_AGE:
+              ci->out_csv << (int)  age_int;
+                  break;
+          case	DL_AGE_IMM:
+              ci->out_csv << (int) age_imm;
+                  break;
+          case	DL_REGION52:
+              ci->out_csv << (int) region_52;
+                  break;
+          case	DL_GROUPETHNO:
+              ci->out_csv << (int) group_ethno;
+                  break;
+          case	DL_LIEU_NAISS:
+              ci->out_csv << (int) reg_naiss;
+                  break;
+          case	DL_RELIGION:
+              ci->out_csv << (int) religion;
+                  break;
+          case	DL_LANGUE_MAT:
+              ci->out_csv << (int) langue_maternelle;
+                  break;
+          case	DL_NB_ENF:
+              ci->out_csv << (int) nombre_enfant_int;
+                  break;
+          case	DL_STATUT_IMM:
+              ci->out_csv << (int) immigrant;
+                  break;
+          case	DL_ETAT_MAT:
+              ci->out_csv << (int) etat_mat;
+                  break;
+          case	DL_SEXE:
+              ci->out_csv << (int) sexe;
+                  break;
+          case	DL_AGE_EPJ:
+              ci->out_csv << (int) youngest_child;
+                  break;
+          case	DL_STATUT_GEN:
+              ci->out_csv << (int) generation_imm_detail;
+                  break;
+          case	DL_SCOLARITE:
+              ci->out_csv << (int) scolarite;
+                  break;
+          case	DL_RESERVE:
+              ci->out_csv << (int) sur_reserve;
+                  break;
+          case	DL_INUNAAT:
+              ci->out_csv << (int) inunaat;
+                  break;
+          case	DL_IMPURESE:
+              ci->out_csv << (int) impurese;
+                  break;
+          case	DL_REGION52_MOB1:
+              ci->out_csv << (int) region52_mob1;
+                  break;
+          case	DL_RESERVE_MOB1:
+              ci->out_csv << (int) reserve_mob1;
+                  break;
+          case	DL_INUNAAT_MOB1:
+              ci->out_csv << (int) inunaat_mob1;
+                  break;
+          case	DL_SCOLARITE0:
+              ci->out_csv << (int) scolarite0;
+                  break;
+          case	DL_DDN_FRACTION:
+              ci->out_csv << (double) (1000 * ddn_fraction);
+                  break;
+          case	DL_TYPE_INDIEN:
+              ci->out_csv << (int) type_indien_inscrit;
+                  break;
+          case	DL_AMERINDIEN:
+              ci->out_csv << (int) amerindien;
+                  break;
+          case	DL_ASCENDANCE:
+              ci->out_csv << (int) ascendance_autochtone;
+                  break;
+          case	DL_OLN:
+              ci->out_csv << (int) langue_officielle;
+                  break;
+          case	DL_LANGUE_MAIS:
+              ci->out_csv << (int) langue_maison;
+                  break;
+          case	DL_QALIPU:
+              ci->out_csv << (int) qalipu;
+                  break;
+          case	DL_CATEG_IMM:
+              ci->out_csv << (int) classe_immigrant;
+                  break;
+          case	DL_ASRR:
+              ci->out_csv << (int) asrr;
+                  break;
+          case	DL_CITOYEN:
+              ci->out_csv << (int) citoyennete;
+                  break;
+          case	DL_IDENTIFIANT:
+              ci->out_csv << (int) identifiant;
+                  break;
+          case	DL_LINK_RI:
+              ci->out_csv << (int) lie_au_ri;
+                  break;
+          default:
+              assert(false); // Error
+
+  //case PMC_SEX:
+  //  ci->out_csv << (int) sex;
+  //  break;
+  //case PMC_AGE:
+  //  ci->out_csv << (int) age_int;
+  //  break;
+  //case PMC_REGION:
+  //  ci->out_csv << (int) region;
+  //  break;
+  //case PMC_NATIVE_BORN:
+  //  ci->out_csv << (int) native_born;
+  //  break;
+  //case PMC_RECENT_ARRIVAL:
+  //  ci->out_csv << (int) recent_arrival;
+  //  break;
+  //case PMC_YEARS_SINCE_ARRIVAL:
+  //  ci->out_csv << (int) years_since_arrival;
+  //  break;
+  //case PMC_INDIGENOUS:
+  //  ci->out_csv << (int) indigenous;
+  //  break;
+      //default:
+      //    assert(false); // Error
+    }
+  }
+  // All fields have been pushed, now write the record.
+  ci->out_csv.write_record();
+}
+
